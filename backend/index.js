@@ -5,6 +5,10 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dbURl = require("./config/db");
+
+//Routes Import
+const authRoutes = require("./routes/auth");
+
 //DB Connection
 mongoose
   .connect(dbURl, {
@@ -23,6 +27,7 @@ mongoose
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
+app.use("/api/user/", authRoutes);
 
 //My Routes
 
