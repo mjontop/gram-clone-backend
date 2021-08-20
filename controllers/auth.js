@@ -71,11 +71,13 @@ exports.signin = async (req, res) => {
     });
   }
 
-  const { error: emailExists, user } = await checkEmailExist(email);
-  if (!emailExists) {
+  const user = await User.findOne({
+    $or: [{ email: email }, { username: email }],
+  });
+  if (!user) {
     return res.status(400).json({
       error: true,
-      message: "Email does Not Exist",
+      message: "Does Not Exist",
     });
   }
   const isValidPassWord = await bcrypt.compare(password, user.encry_password);
