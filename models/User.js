@@ -5,7 +5,6 @@ var userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
       maxlength: 32,
     },
     email: {
@@ -17,6 +16,11 @@ var userSchema = new mongoose.Schema(
     bio: {
       type: String,
       trim: true,
+    },
+    username: {
+      type: String,
+      trim: true,
+      unique: true,
     },
     encry_password: {
       type: String,

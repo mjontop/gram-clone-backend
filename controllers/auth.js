@@ -10,6 +10,14 @@ async function checkEmailExist(email) {
   } catch (ex) {}
 }
 
+async function checkUsernameExist(username) {
+  try {
+    const user = await User.findOne({ username });
+    if (user) return { error: true, user };
+    return { error: false, user };
+  } catch (ex) {}
+}
+
 exports.signup = async (req, res) => {
   const errors = validationResult(req);
 
@@ -22,12 +30,24 @@ exports.signup = async (req, res) => {
   const { error: emailExists, user: existingUser } = await checkEmailExist(
     req.body.email
   );
+
   if (emailExists) {
     return res.status(400).json({
       error: true,
       message: "Email already exists",
     });
   }
+
+  const { error: usernameExists, user: existingUserForusername } =
+    await checkUsernameExist(req.body.username);
+
+  if (usernameExists) {
+    return res.status(400).json({
+      error: true,
+      message: "Username already taken",
+    });
+  }
+
   const encry_password = await getHashedPassword(req.body.password);
   if (encry_password.error) {
     return res.status(500).json({
