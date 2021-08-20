@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { check } = require("express-validator");
-const { signup, signin } = require("../controllers/auth");
+const { signup, signin, updateProfile } = require("../controllers/auth");
+const authenticate = require("../middleware/authenticate");
 
 router.post(
   "/signup",
@@ -19,5 +20,7 @@ router.post(
   check("password", "password field is required").isLength({ min: 1 }),
   signin
 );
+
+router.post("/updateProfile", authenticate, updateProfile);
 
 module.exports = router;
