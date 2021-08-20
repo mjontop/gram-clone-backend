@@ -27,9 +27,7 @@ exports.signup = async (req, res) => {
       message: errors.array()[0].msg,
     });
   }
-  const { error: emailExists, user: existingUser } = await checkEmailExist(
-    req.body.email
-  );
+  const { error: emailExists } = await checkEmailExist(req.body.email);
 
   if (emailExists) {
     return res.status(400).json({
@@ -38,8 +36,7 @@ exports.signup = async (req, res) => {
     });
   }
 
-  const { error: usernameExists, user: existingUserForusername } =
-    await checkUsernameExist(req.body.username);
+  const { error: usernameExists } = await checkUsernameExist(req.body.username);
 
   if (usernameExists) {
     return res.status(400).json({
@@ -91,5 +88,35 @@ exports.signin = async (req, res) => {
   return res.status(200).json({
     error: true,
     message: "Incorrect Password",
+  });
+};
+
+exports.updateProfile = async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+
+  const RB = req.body;
+  if (req.user.username !== RB.username) {
+    const { error: usernameExists } = await checkUsernameExist(RB.username);
+
+    if (usernameExists) {
+      return res.status(400).json({
+        error: true,
+        message: "Username already taken",
+      });
+    }
+  }
+
+  user.name = RB.name || user.name;
+  user.bio = RB.bio || user.bio;
+  user.username = RB.username || user.username;
+
+  const updatedUser = await user.save();
+
+  return res.status(400).json({
+    error: false,
+    message: "Profile Updated",
+    token: updatedUser.generateAuthToken(),
   });
 };
