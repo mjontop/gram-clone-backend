@@ -111,6 +111,7 @@ exports.updateProfile = async (req, res) => {
   user.name = RB.name || user.name;
   user.bio = RB.bio || user.bio;
   user.username = RB.username || user.username;
+  user.imageBase64 = RB.imageBase64 || user.imageBase64;
 
   const updatedUser = await user.save();
 

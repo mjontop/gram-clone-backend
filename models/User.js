@@ -27,6 +27,9 @@ var userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageBase64: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
