@@ -1,5 +1,4 @@
 const Post = require("../models/Post");
-const { validationResult, check } = require("express-validator");
 
 exports.createPost = async (req, res) => {
   if (!req.body.imageBase64) {
@@ -29,6 +28,30 @@ exports.createPost = async (req, res) => {
   }
 };
 
+exports.deletePost = async (req, res) => {
+  try {
+    const deletedPost = await Post.findOneAndDelete({
+      postedBy: req.user.email,
+      _id: req.params.postId,
+    });
+    if (deletedPost) {
+      return res.status(200).json({
+        error: false,
+        message: "Post Deleted Successfully",
+      });
+    }
+    return res.status(404).json({
+      error: true,
+      message: "Post Not Found",
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error" + ex,
+    });
+  }
+};
+
 exports.getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
@@ -40,6 +63,21 @@ exports.getPost = async (req, res) => {
     return res.status(500).json({
       error: true,
       message: "Post Not Found",
+    });
+  }
+};
+
+exports.getUsersPosts = async (req, res) => {
+  try {
+    const post = await Post.find({ postedBy: req.user.email });
+    return res.status(200).json({
+      error: false,
+      post,
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: "Not Posted",
     });
   }
 };
