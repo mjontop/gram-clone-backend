@@ -14,7 +14,7 @@ var postSchema = new mongoose.Schema(
     },
     imageBase64: {
       type: String,
-      require: true,
+      required: true,
     },
     likedBy: {
       type: [String],
