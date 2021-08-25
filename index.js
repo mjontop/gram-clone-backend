@@ -8,6 +8,7 @@ const dbURl = require("./config/db");
 //Routes Import
 const authRoutes = require("./routes/authRoute");
 const postRoutes = require("./routes/postRoute");
+const connectionRoute = require("./routes/connectionRoute");
 
 //DB Connection
 mongoose
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/user/", authRoutes);
 app.use("/api/post/", postRoutes);
+app.use("/api/connections/", connectionRoute);
 
 //My Routes
 
