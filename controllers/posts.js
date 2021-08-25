@@ -55,6 +55,12 @@ exports.deletePost = async (req, res) => {
 exports.getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return res.status(500).json({
+        error: true,
+        message: "Post Not Found",
+      });
+    }
     return res.status(200).json({
       error: false,
       post,
@@ -69,15 +75,41 @@ exports.getPost = async (req, res) => {
 
 exports.getUsersPosts = async (req, res) => {
   try {
-    const post = await Post.find({ postedBy: req.user.email });
+    const posts = await Post.find({ postedBy: req.body.email });
     return res.status(200).json({
       error: false,
-      post,
+      posts,
     });
   } catch (ex) {
     return res.status(500).json({
       error: true,
       message: "Not Posted",
+    });
+  }
+};
+
+exports.updatePost = async (req, res) => {
+  try {
+    const postToUpdate = await Post.findOne({
+      postedBy: req.user.email,
+      _id: req.params.postId,
+    });
+    if (!postToUpdate) {
+      return res.status(200).json({
+        error: true,
+        message: "Post Not Found",
+      });
+    }
+    postToUpdate.captions = req.body.captions;
+    await postToUpdate.save();
+    return res.status(404).json({
+      error: true,
+      message: "Post Updated",
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error" + ex,
     });
   }
 };

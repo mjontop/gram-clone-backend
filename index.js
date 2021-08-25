@@ -6,8 +6,8 @@ const cors = require("cors");
 const dbURl = require("./config/db");
 
 //Routes Import
-const authRoutes = require("./routes/auth");
-const postRoutes = require("./routes/post");
+const authRoutes = require("./routes/authRoute");
+const postRoutes = require("./routes/postRoute");
 
 //DB Connection
 mongoose
