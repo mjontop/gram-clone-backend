@@ -1,6 +1,15 @@
 const Connection = require("../models/Connections");
 const User = require("../models/User");
 
+async function getUsernameFromEmail(emailList) {
+  let allUsernames = await User.find(
+    { email: { $in: emailList } },
+    { username: 1, _id: 0 }
+  );
+  allUsernames = allUsernames.map((follower) => follower.username);
+  return allUsernames;
+}
+
 exports.getAllFollowers = async (req, res) => {
   try {
     let followers = await Connection.find({
@@ -13,6 +22,7 @@ exports.getAllFollowers = async (req, res) => {
       });
     }
     followers = followers.map((follower) => follower.follower);
+    followers = await getUsernameFromEmail(followers);
     return res.status(404).json({
       error: false,
       followers,
@@ -38,6 +48,7 @@ exports.getAllFollowees = async (req, res) => {
       });
     }
     followees = followees.map((followee) => followee.followee);
+    followees = await getUsernameFromEmail(followees);
     return res.status(404).json({
       error: false,
       followees,
