@@ -1,1 +1,1 @@
-exports.jwtPvtKey = 'MyJWTPVTKey'
+exports.jwtPvtKey = 'MyJWTPVTKey'  //Your Private key

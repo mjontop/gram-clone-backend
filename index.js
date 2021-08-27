@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbURl = require("./config/db");
 
@@ -25,7 +24,7 @@ mongoose
   });
 
 //Middlewares
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 app.use("/api/user/", authRoutes);
 app.use("/api/post/", postRoutes);
