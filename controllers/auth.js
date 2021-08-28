@@ -121,3 +121,30 @@ exports.updateProfile = async (req, res) => {
     token: updatedUser.generateAuthToken(),
   });
 };
+
+exports.searchUser = async (req, res) => {
+  try {
+    let users = await User.find(
+      {
+        $or: [
+          { email: req.params.searchKey },
+          { username: { $regex: req.params.searchKey } },
+        ],
+      },
+      { _id: 0, username: 1 }
+    );
+
+    users = users.map((user) => user.username);
+
+    return res.status(200).json({
+      error: false,
+      users,
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: ex,
+      users: [],
+    });
+  }
+};
