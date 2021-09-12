@@ -1,7 +1,13 @@
 var express = require("express");
 var router = express.Router();
 const { check } = require("express-validator");
-const { signup, signin, updateProfile, searchUser } = require("../controllers/auth");
+const {
+  getEmailFromUsername,
+  signup,
+  signin,
+  updateProfile,
+  searchUser,
+} = require("../controllers/auth");
 const authenticate = require("../middleware/authenticate");
 
 router.post(
@@ -23,5 +29,6 @@ router.post(
 
 router.post("/updateProfile", authenticate, updateProfile);
 router.get("/searchUser/:searchKey", searchUser);
+router.get("/getEmailfromUsername/:username", getEmailFromUsername);
 
 module.exports = router;
