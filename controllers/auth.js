@@ -13,7 +13,7 @@ async function checkEmailExist(email) {
 async function checkUsernameExist(username) {
   try {
     const user = await User.findOne({ username });
-    if (user) return { error: true, user };
+    if (!user) return { error: true, user: null };
     return { error: false, user };
   } catch (ex) {}
 }
@@ -147,4 +147,8 @@ exports.searchUser = async (req, res) => {
       users: [],
     });
   }
+};
+
+exports.emailFromUsername = async (req, res) => {
+  const user = await checkUsernameExist(req.body.username);
 };
