@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema(
     name: {
       type: String,
       maxlength: 32,
+      default: "",
     },
     email: {
       type: String,
@@ -17,6 +18,7 @@ var userSchema = new mongoose.Schema(
     bio: {
       type: String,
       trim: true,
+      default: "",
     },
     username: {
       type: String,
@@ -29,6 +31,7 @@ var userSchema = new mongoose.Schema(
     },
     imageBase64: {
       type: String,
+      default: "",
     },
   },
   { timestamps: true }
