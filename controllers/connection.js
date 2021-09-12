@@ -161,3 +161,26 @@ exports.toggleFollowers = async (req, res) => {
     });
   }
 };
+
+exports.getAllConnectionsCount = async (req, res) => {
+  try {
+    let followersCount = await Connection.countDocuments({
+      followee: req.body.email,
+    });
+    let followeesCount = await Connection.countDocuments({
+      follower: req.body.email,
+    });
+    return res.status(200).json({
+      error: false,
+      followers: followersCount,
+      following: followeesCount,
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      followers: 0,
+      following: 0,
+      message: "Error in getting Followers " + ex,
+    });
+  }
+};
