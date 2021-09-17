@@ -74,7 +74,7 @@ exports.signin = async (req, res) => {
   if (!user) {
     return res.status(400).json({
       error: true,
-      message: "Does Not Exist",
+      message: "Invalid Credentials",
     });
   }
   const isValidPassWord = await bcrypt.compare(password, user.encry_password);
@@ -87,7 +87,7 @@ exports.signin = async (req, res) => {
   }
   return res.status(400).json({
     error: true,
-    message: "Incorrect Password",
+    message: "Invalid Credentials",
   });
 };
 
