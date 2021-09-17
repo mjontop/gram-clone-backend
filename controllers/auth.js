@@ -80,12 +80,12 @@ exports.signin = async (req, res) => {
   const isValidPassWord = await bcrypt.compare(password, user.encry_password);
 
   if (isValidPassWord) {
-    return res.status(400).json({
+    return res.status(200).json({
       error: false,
       token: user.generateAuthToken(),
     });
   }
-  return res.status(200).json({
+  return res.status(400).json({
     error: true,
     message: "Incorrect Password",
   });
