@@ -115,7 +115,7 @@ exports.updateProfile = async (req, res) => {
 
   const updatedUser = await user.save();
 
-  return res.status(400).json({
+  return res.status(200).json({
     error: false,
     message: "Profile Updated",
     token: updatedUser.generateAuthToken(),
