@@ -23,7 +23,7 @@ exports.getAllFollowers = async (req, res) => {
     }
     followers = followers.map((follower) => follower.follower);
     followers = await getUsernameFromEmail(followers);
-    return res.status(404).json({
+    return res.status(200).json({
       error: false,
       followers,
     });
@@ -49,7 +49,7 @@ exports.getAllFollowees = async (req, res) => {
     }
     followees = followees.map((followee) => followee.followee);
     followees = await getUsernameFromEmail(followees);
-    return res.status(404).json({
+    return res.status(200).json({
       error: false,
       followees,
     });
