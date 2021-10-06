@@ -5,6 +5,7 @@ const {
   getAllFollowers,
   getAllFollowees,
   getAllConnectionsCount,
+  getFollowingStatus,
 } = require("../controllers/connection");
 const authenticate = require("../middleware/authenticate");
 
@@ -14,5 +15,6 @@ router.post("/getAllFollowees", getAllFollowees);
 
 router.post("/toggleFollow", authenticate, toggleFollowers);
 router.post("/getAllConnectionsCount", getAllConnectionsCount);
+router.post("/getFollowingStatus", authenticate, getFollowingStatus);
 
 module.exports = router;

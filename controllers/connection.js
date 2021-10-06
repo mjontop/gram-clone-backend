@@ -190,3 +190,29 @@ exports.getAllConnectionsCount = async (req, res) => {
     });
   }
 };
+
+exports.getFollowingStatus = async (req, res) => {
+  try {
+    req.body.email = await getEmailFromUsername(req.body.username);
+    const user = await Connection.findOne({
+      followee: req.body.email,
+      follower: req.user.email,
+    });
+    if (user) {
+      return res.status(200).json({
+        error: false,
+        follows: true,
+      });
+    }
+    return res.status(200).json({
+      error: false,
+      follows: false,
+    });
+  } catch (ex) {
+    console.log(ex);
+    return res.status(404).json({
+      error: true,
+      follows: false,
+    });
+  }
+};
