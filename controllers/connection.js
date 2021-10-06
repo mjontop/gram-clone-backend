@@ -10,6 +10,11 @@ async function getUsernameFromEmail(emailList) {
   return allUsernames;
 }
 
+async function getEmailFromUsername(username) {
+  const { email } = await User.findOne({ username }, { email: 1, _id: 0 });
+  return email;
+}
+
 exports.getAllFollowers = async (req, res) => {
   try {
     let followers = await Connection.find({
@@ -117,6 +122,7 @@ const checkIfEmailExists = async (email) => {
 
 exports.toggleFollowers = async (req, res) => {
   try {
+    req.body.email = await getEmailFromUsername(req.body.username);
     if (req.body.email === req.user.email) {
       return res.status(400).json({
         error: true,
