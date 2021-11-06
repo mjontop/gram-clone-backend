@@ -15,7 +15,7 @@ router.post("/deletePost/:postId", authenticate, deletePost);
 
 router.get("/:postId", getPost);
 
-router.post("/myPosts", getUsersPosts);
+router.post("/all", getUsersPosts);
 router.post("/update/:postId", authenticate, updatePost);
 
 module.exports = router;
