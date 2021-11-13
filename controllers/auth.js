@@ -149,8 +149,26 @@ exports.searchUser = async (req, res) => {
   }
 };
 
-exports.getEmailFromUsername = async (req, res) => {
+exports.getUserFromUsername = async (req, res) => {
   const { user, error } = await checkUsernameExist(req.params.username);
+  if (!!error) {
+    return res.json({
+      email: user.email,
+      bio: user.bio,
+      name: user.name,
+      imageBase64: user.imageBase64,
+      username: user.username,
+      error: false,
+    });
+  }
+  return res.json({
+    email: null,
+    error: true,
+  });
+};
+
+exports.getUserFromEmail = async (req, res) => {
+  const { user, error } = await checkEmailExist(req.params.email);
   if (!!error) {
     return res.json({
       email: user.email,
