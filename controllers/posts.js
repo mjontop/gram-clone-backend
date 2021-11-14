@@ -95,15 +95,15 @@ exports.updatePost = async (req, res) => {
       _id: req.params.postId,
     });
     if (!postToUpdate) {
-      return res.status(200).json({
+      return res.status(404).json({
         error: true,
         message: "Post Not Found",
       });
     }
     postToUpdate.captions = req.body.captions;
     await postToUpdate.save();
-    return res.status(404).json({
-      error: true,
+    return res.status(200).json({
+      error: false,
       message: "Post Updated",
     });
   } catch (ex) {
