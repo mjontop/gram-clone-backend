@@ -34,6 +34,7 @@ Start the server
 ## Tech Stack
 
 **Client:** Next, React, MaterialUI
+
 [Here is the Link of Frontend Repo](https://github.com/mjontop/insta-app)
 
 **Server:** Node, Express, MongoDB
