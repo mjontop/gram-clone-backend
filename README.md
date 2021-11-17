@@ -31,6 +31,12 @@ Start the server
 ```bash
   npm start
 ```
+## Tech Stack
+
+**Client:** Next, React, MaterialUI
+[Here is the Link of Frontend Repo](https://github.com/mjontop/insta-app)
+
+**Server:** Node, Express, MongoDB
 
   
 ## Environment Variables
@@ -44,14 +50,14 @@ To run this project, you will need to add the following environment variables to
 
 ## Documentation
 
-[Documentation](https://documenter.getpostman.com/view/18293663/UVC9g58S)
+[Here is Link of Postman Documentation](https://documenter.getpostman.com/view/18293663/UVC9g58S)
 
 #### {{url}} = https://api-insta-app.herokuapp.com/api
 
 
-## Authors
+## Author
 
-- [Manikant Jha](https://github.com/mjontop)
+- Manikant Jha [@mjontop](https://github.com/mjontop)
 
   
 ## License
