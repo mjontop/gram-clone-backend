@@ -6,6 +6,8 @@ const {
   getUsersPosts,
   deletePost,
   updatePost,
+  likePost,
+  unLikePost,
 } = require("../controllers/posts");
 const authenticate = require("../middleware/authenticate");
 
@@ -17,5 +19,7 @@ router.get("/:postId", getPost);
 
 router.post("/all", getUsersPosts);
 router.post("/update/:postId", authenticate, updatePost);
+router.post("/like/:postId", authenticate, likePost);
+router.post("/unLike/:postId", authenticate, unLikePost);
 
 module.exports = router;

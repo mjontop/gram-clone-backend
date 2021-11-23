@@ -113,3 +113,61 @@ exports.updatePost = async (req, res) => {
     });
   }
 };
+
+exports.likePost = async (req, res) => {
+  try {
+    const postToUpdate = await Post.findOne({
+      postedBy: req.user.email,
+      _id: req.params.postId,
+    });
+    if (!postToUpdate) {
+      return res.status(404).json({
+        error: true,
+        message: "Post Not Found",
+      });
+    }
+    if (!postToUpdate.likedBy.includes(req.user.email)) {
+      postToUpdate.likedBy = [...postToUpdate.likedBy, req.user.email];
+      await postToUpdate.save();
+    }
+    return res.status(200).json({
+      error: false,
+      postToUpdate,
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error" + ex,
+    });
+  }
+};
+
+exports.unLikePost = async (req, res) => {
+  try {
+    const postToUpdate = await Post.findOne({
+      postedBy: req.user.email,
+      _id: req.params.postId,
+    });
+    if (!postToUpdate) {
+      return res.status(404).json({
+        error: true,
+        message: "Post Not Found",
+      });
+    }
+
+    const index = postToUpdate.likedBy.indexOf(req.user.email);
+    if (index > -1) {
+      postToUpdate.likedBy.splice(index, 1);
+      await postToUpdate.save();
+    }
+    return res.status(200).json({
+      error: false,
+      postToUpdate,
+    });
+  } catch (ex) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error" + ex,
+    });
+  }
+};
